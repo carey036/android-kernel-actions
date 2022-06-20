@@ -21,6 +21,7 @@ extract_tarball(){
     tar xf "$1" -C "$2"
 }
 workdir="$GITHUB_WORKSPACE"
+apt install -y git
 git config --global --add safe.directory $workdir
 arch="$1"
 compiler="$2"
