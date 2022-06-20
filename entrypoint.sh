@@ -208,13 +208,15 @@ if ! make O=out $arch_opts $make_opts $host_make_opts "$defconfig"; then
     exit 2
 fi
 msg "Begin building kernel..."
+### test ---carey
+# make O=out $arch_opts $make_opts $host_make_opts -j"$(nproc --all)" prepare
 
-make O=out $arch_opts $make_opts $host_make_opts -j"$(nproc --all)" prepare
-
-if ! make O=out $arch_opts $make_opts $host_make_opts -j"$(nproc --all)"; then
-    err "Failed building kernel, probably the toolchain is not compatible with the kernel, or kernel source problem"
-    exit 3
-fi
+#if ! make O=out $arch_opts $make_opts $host_make_opts -j"$(nproc --all)"; then
+#    err "Failed building kernel, probably the toolchain is not compatible with the kernel, or kernel source problem"
+#    exit 3
+#fi
+echo "hello" >> out/arch/"$arch"/boot/"$image"
+### ---end test ---carey
 set_output elapsed_time "$(echo "$(date +%s)"-"$start_time" | bc)"
 msg "Packaging the kernel..."
 zip_filename="${name}-${tag}-${date}.zip"
@@ -223,6 +225,7 @@ if [[ -e "$workdir"/"$zipper_path" ]]; then
     cd "$workdir"/"$zipper_path" || exit 127
     rm -rf .git
     zip -r9 "$zip_filename" . -x .gitignore README.md || exit 127
+    ls
     set_output outfile "$workdir"/"$zipper_path"/"$zip_filename"
     cd "$workdir" || exit 127
     exit 0
