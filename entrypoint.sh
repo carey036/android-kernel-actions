@@ -20,8 +20,8 @@ extract_tarball(){
     echo "Extracting $1 to $2"
     tar xf "$1" -C "$2"
 }
-git config --global --add safe.directory $workdir
 workdir="$GITHUB_WORKSPACE"
+git config --global --add safe.directory $workdir
 arch="$1"
 compiler="$2"
 defconfig="$3"
